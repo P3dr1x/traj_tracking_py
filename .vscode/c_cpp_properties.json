@@ -1,0 +1,37 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/mattia/interbotix_ws/install/moveit_visual_tools/include/**",
+        "/home/mattia/interbotix_ws/install/interbotix_xs_rviz/include/**",
+        "/home/mattia/interbotix_ws/install/interbotix_xs_ros_control/include/**",
+        "/home/mattia/interbotix_ws/install/interbotix_xs_msgs/include/**",
+        "/home/mattia/interbotix_ws/install/interbotix_xs_driver/include/**",
+        "/home/mattia/interbotix_ws/install/interbotix_perception_msgs/include/**",
+        "/home/mattia/interbotix_ws/install/interbotix_moveit_interface_msgs/include/**",
+        "/home/mattia/interbotix_ws/install/dynamixel_workbench_toolbox/include/**",
+        "/home/mattia/gz_ros2_control_ws/install/gz_ros2_control/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/mattia/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/dynamixel_workbench_toolbox/include/**",
+        "/home/mattia/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_driver/include/**",
+        "/home/mattia/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk/include/**",
+        "/home/mattia/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/include/**",
+        "/home/mattia/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_tf_tools/include/**",
+        "/home/mattia/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_xs_toolbox/interbotix_xs_ros_control/include/**",
+        "/home/mattia/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_xs_toolbox/interbotix_xs_rviz/include/**",
+        "/home/mattia/interbotix_ws/src/moveit_visual_tools/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>traj_tracking_py</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="mattiapedrocco@libero.it">mattia</maintainer>
+  <license>TODO: License declaration</license>
+
+  <depend>rclpy</depend>
+
+  <build_depend>rclpy_action</build_depend>
+
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+
+  <!-- interbotix -->
+  <depend>interbotix_xsarm_descriptions</depend>
+  <depend>interbotix_xs_modules</depend>
+  <depend>interbotix_xs_ros_control</depend>
+  <depend>interbotix_common_sim</depend>
+
+  <!-- ros2_control -->
+  <depend>controller_manager</depend>
+  <exec_depend>control_msgs</exec_depend>
+  <exec_depend>gz_ros2_control</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>ros2controlcli</exec_depend>
+
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

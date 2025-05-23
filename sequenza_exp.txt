@@ -1,0 +1,12 @@
+1. TAKEOFF: the arm should have the motors armed (torque enabled) and should stay in the initial sleep configuration. Then the UAV takeoffs.
+
+2. SETTLING: the arm settles to the trajectory starting configuration specified in terms of joint angle (q_in). Then it should mantain the configuration with the UAV in flight until a new command from the user arrives. It can go smoothly with motor configured as in file sett_mode.yaml. (IT COULD BE A SIMPLE CLI PUB COMAND TO commands/joint_single_command topic)
+
+3. TRACKING: the user send a command for executing the joint trajectory which is given as a csv file generated through MATLAB (q_traj_circle). It gives a joint trajectory point for each millisecond. It must track the trajectory with great precision so before change the motor configuration file to 
+
+4. HOLD: after having finished the trajectory to track the manipulator should return to the starting configuration q_in and hold it (automatically). From here there are two possibilities.
+
+5a. RE-TRACK: the user can command to remake the trajectory tracking phase
+5b. FOLD: The user can command the arm to return to sleep configuration
+
+6. HOLD BEFORE LANDING: the arm should hold the folded configuation. From here the user can command to get back to initial  
