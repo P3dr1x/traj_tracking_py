@@ -15,5 +15,5 @@ For executing with the EE the circular trajectory that is contained in the `\tra
 ```
 cd interbotix_ws
 . install/setup.bash
-ros2 run traj_tracking_py traj_tracking_client ~/interbotix_ws/src/interbotix_ros_manipulators/interbotix_ros_xsarms/traj_tracking_py/trajectories/q_traj_circle.csv
+ros2 run traj_tracking_py traj_tracker_client ~/interbotix_ws/src/interbotix_ros_manipulators/interbotix_ros_xsarms/traj_tracking_py/trajectories/q_traj_circle.csv
 ```
