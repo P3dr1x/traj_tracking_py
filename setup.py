@@ -10,6 +10,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name + '/launch', ['launch/tracking.launch.py']),
+        ('share/' + package_name + '/plotjuggler', ['plotjuggler/ee_traj_plot.xml']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -20,7 +22,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'traj_tracker_client = traj_tracking_py.traj_tracker_client:main'
+            'traj_tracker_client = traj_tracking_py.traj_tracker_client:main',
+            'ee_pose_publisher = traj_tracking_py.ee_pose_publisher:main',
         ],
     },
 )
