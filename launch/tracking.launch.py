@@ -10,12 +10,14 @@ from launch.actions import (
     DeclareLaunchArgument,
     IncludeLaunchDescription,
     OpaqueFunction,
+    ExecuteProcess,
 )
 from launch.conditions import LaunchConfigurationEquals
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
     LaunchConfiguration,
     PathJoinSubstitution,
+    EnvironmentVariable,
 )
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterFile
@@ -31,6 +33,8 @@ def launch_setup(context, *args, **kwargs):
     robot_description_launch_arg = LaunchConfiguration('robot_description')
     hardware_type_launch_arg = LaunchConfiguration('hardware_type')
     xs_driver_logging_level_launch_arg = LaunchConfiguration('xs_driver_logging_level')
+    use_sim_launch_arg = LaunchConfiguration('use_sim')  # Nuovo argomento
+    des_traj_bag_path_launch_arg = LaunchConfiguration('bag_path') # Nuovo argomento per il percorso della ros2 bag
 
     # sets use_sim_time parameter to 'true' if using gazebo hardware
     use_sim_time_param = determine_use_sim_time_param(
@@ -62,6 +66,7 @@ def launch_setup(context, *args, **kwargs):
             'use_rviz': use_rviz_launch_arg,
             'mode_configs': mode_configs_launch_arg,
             'hardware_type': hardware_type_launch_arg,
+            'use_sim': use_sim_launch_arg,  # Passa il parametro use_sim
             'use_sim_time': use_sim_time_param,
             'xs_driver_logging_level': xs_driver_logging_level_launch_arg,
         }.items(),
@@ -171,6 +176,20 @@ def launch_setup(context, *args, **kwargs):
         ]
     )
 
+    # Nodo per riprodurre la traiettoria desiderata dell'EE su un topic rinominato (es. /ee_pose_desired)
+    ee_des_bagplayer_proc = ExecuteProcess(
+        cmd=[
+            'ros2',
+            'bag',
+            'play',
+            des_traj_bag_path_launch_arg,
+            '--loop',
+            '--remap',
+            '/ee_pose:=/ee_pose_des'
+        ],
+        output='screen'
+    )
+
     return [
         controller_manager_node,
         spawn_arm_controller_node,
@@ -180,6 +199,7 @@ def launch_setup(context, *args, **kwargs):
         xsarm_descriptions_launch_include,
         ee_pose_pub_node,
         plotjuggler_node,
+        ee_des_bagplayer_proc,
     ]
 
 
@@ -206,7 +226,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             'use_rviz',
-            default_value='false',
+            default_value='true',
             description='launches RViz if set to `true`.',
         )
     )
@@ -214,9 +234,9 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'mode_configs',
             default_value=PathJoinSubstitution([
-                FindPackageShare('interbotix_xsarm_ros_control'),
-                'config',
-                'modes.yaml',
+                FindPackageShare('traj_tracking_py'),
+                'controllers',
+                'modes_quick.yaml',   # change to modes_quick.yaml for the fastest tracking of the reference trajectory
             ]),
             description="the file path to the 'mode config' YAML file.",
         )
@@ -241,9 +261,29 @@ def generate_launch_description():
             )
         )
     )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            'use_sim',
+            default_value='false',
+            choices=('true', 'false'),
+            description='Setta true per usare la simulazione.'
+        )
+    )
     declared_arguments.extend(
         declare_interbotix_xsarm_robot_description_launch_arguments(
             hardware_type='actual'
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            'bag_path',
+            default_value=PathJoinSubstitution([
+                #EnvironmentVariable('HOME'),  # usa la variabile d'ambiente HOME
+                FindPackageShare('traj_tracking_py'),
+                'bags',
+                'perfect_circle'
+            ]),
+        description='Percorso alla ros2 bag contenente la traiettoria desiderata.'
         )
     )
 
