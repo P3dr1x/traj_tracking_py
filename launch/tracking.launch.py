@@ -177,18 +177,18 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # Nodo per riprodurre la traiettoria desiderata dell'EE su un topic rinominato (es. /ee_pose_desired)
-    ee_des_bagplayer_proc = ExecuteProcess(
-        cmd=[
-            'ros2',
-            'bag',
-            'play',
-            des_traj_bag_path_launch_arg,
-            '--loop',
-            '--remap',
-            '/ee_pose:=/ee_pose_des'
-        ],
-        output='screen'
-    )
+    # ee_des_bagplayer_proc = ExecuteProcess(
+    #     cmd=[
+    #         'ros2',
+    #         'bag',
+    #         'play',
+    #         des_traj_bag_path_launch_arg,
+    #         '--loop',
+    #         '--remap',
+    #         '/ee_pose:=/ee_pose_des'
+    #     ],
+    #     output='screen'
+    # )
 
     return [
         controller_manager_node,
@@ -199,7 +199,7 @@ def launch_setup(context, *args, **kwargs):
         xsarm_descriptions_launch_include,
         ee_pose_pub_node,
         plotjuggler_node,
-        ee_des_bagplayer_proc,
+        #ee_des_bagplayer_proc,
     ]
 
 
@@ -236,7 +236,7 @@ def generate_launch_description():
             default_value=PathJoinSubstitution([
                 FindPackageShare('traj_tracking_py'),
                 'controllers',
-                'modes_quick.yaml',   # change to modes_quick.yaml for the fastest tracking of the reference trajectory
+                'modes_slow.yaml',   
             ]),
             description="the file path to the 'mode config' YAML file.",
         )

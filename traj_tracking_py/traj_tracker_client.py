@@ -12,11 +12,32 @@ class TrajTrackerClient(Node):
         super().__init__('trajectory_client')
         self._action_client = ActionClient(self, FollowJointTrajectory, robot_namespace + '/arm_controller/follow_joint_trajectory')
         self.csv_file = csv_file
+        # Nomi dei giunti standard, usati sia per posizioni che per velocità
+        self.joint_names = ['waist', 'shoulder', 'elbow', 'forearm_roll', 'wrist_angle', 'wrist_rotate']
+
 
     def read_csv_trajectory(self):
         points = []
         with open(self.csv_file, mode='r') as file:
             reader = csv.DictReader(file)
+
+            # Controlla se le colonne delle velocità sono presenti nell'header
+            # Ci aspettiamo nomi di colonna tipo 'waist_d', 'shoulder_d', etc.
+            has_velocities = True
+            if reader.fieldnames:
+                for joint_name in self.joint_names:
+                    if f"{joint_name}_d" not in reader.fieldnames:
+                        has_velocities = False
+                        self.get_logger().info(f"Colonna velocità '{joint_name}_d' non trovata. Si assumerà che il CSV contenga solo posizioni.")
+                        break
+                if has_velocities:
+                    self.get_logger().info("Rilevate colonne di velocità nel CSV.")
+            else:
+                # Nessun header o file vuoto
+                has_velocities = False
+                self.get_logger().warn("CSV senza header o vuoto. Impossibile determinare la presenza di velocità.")
+
+
             for row in reader:
                 point = JointTrajectoryPoint()
                 # Imposta time_from_start dal valore "time" del file
@@ -24,18 +45,26 @@ class TrajTrackerClient(Node):
                 point.time_from_start.sec = int(time_sec)  # il campo sec dell'interfaccia deve essere un int! 
                 # Dobbiamo gestire anche i nanosecondi
                 point.time_from_start.nanosec = int((time_sec - int(time_sec)) * 1e9)
+
                 # Estrae le posizioni per ciascun giunto
                 positions = []
-                for joint in ['waist', 'shoulder', 'elbow', 'forearm_roll', 'wrist_angle', 'wrist_rotate']:
+                for joint in self.joint_names:
                     positions.append(float(row[joint]))
                 point.positions = positions
+
+                if has_velocities:
+                    velocities = []
+                    for joint in self.joint_names:
+                        velocities.append(float(row[f"{joint}_d"]))
+                    point.velocities = velocities
+
                 points.append(point)
         return points
 
     def send_goal(self):
         goal_msg = FollowJointTrajectory.Goal()
         # Definisce l'elenco dei giunti, assicurarsi che corrispondano al CSV
-        goal_msg.trajectory.joint_names = ['waist', 'shoulder', 'elbow', 'forearm_roll', 'wrist_angle', 'wrist_rotate']
+        goal_msg.trajectory.joint_names = self.joint_names
         goal_msg.trajectory.points = self.read_csv_trajectory()
 
         self.get_logger().info("Invio del goal della traiettoria...")

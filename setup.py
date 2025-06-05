@@ -16,7 +16,11 @@ setup(
             'bags/perfect_circle/metadata.yaml',
             'bags/perfect_circle/perfect_circle_0.db3'
         ]),
-        ('share/' + package_name + '/controllers', ['controllers/modes_quick.yaml']),
+        ('share/' + package_name + '/controllers', [
+            'controllers/modes_quick.yaml',
+            'controllers/mobile_wx250s_controllers.yaml',
+            'controllers/modes_slow.yaml',]),
+        ('share/' + package_name + '/trajectories', ['trajectories/ee_circle_traj.csv']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

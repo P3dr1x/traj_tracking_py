@@ -53,11 +53,11 @@ ros2 launch traj_tracking_py tracking.launch.py robot_model:=mobile_wx250s hardw
 ros2 launch traj_tracking_py tracking.launch.py robot_model:=mobile_wx250s use_sim:=true
 ```
 
-⚠️ In this case the `ee_pose_publisher.py` node does not work since some frames are missing when the description launch file is called
+⚠️ In this case the `ee_pose_publisher.py` node does not work since some frames are missing when the description launch file is called.
 
 ## Trajectory tracking with WidowX250S arm
 
-In this package there is an action client that makes a call to the action server `mobile_wx250s/arm_controller/follow_joint_trajectory` that activates when the arm_controller is launched. There is also a [publisher]() that publishes the trajectory points on the `/mobile_wx250s/commands/joint_group` topic.
+In this package there is an action client that makes a call to the action server `mobile_wx250s/arm_controller/follow_joint_trajectory` that activates when the arm_controller is launched. There is also a [publisher](https://github.com/P3dr1x/traj_tracking_py/blob/main/traj_tracking_py/traj_tracker_publisher.py) that publishes the trajectory points on the `/mobile_wx250s/commands/joint_group` topic.
 
 ### Action client: Example of usage
 
@@ -76,7 +76,6 @@ For achieving good performances in the tracking is necessary to create a new par
 cd interbotix_ws
 . install/setup.bash
 ros2 run traj_tracking_py traj_tracker_publisher ~/interbotix_ws/src/interbotix_ros_manipulators/interbotix_ros_xsarms/traj_tracking_py/trajectories/q_traj_circle.csv
-
 ```
 
  Trajectory Tracked | PlotJuggler |

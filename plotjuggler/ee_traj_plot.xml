@@ -1,17 +1,47 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <root>
- <tabbed_widget name="Main Window" parent="main_window">
-  <Tab containers="1" tab_name="tab1">
+ <tabbed_widget parent="main_window" name="Main Window">
+  <Tab tab_name="tab1" containers="1">
    <Container>
-    <DockSplitter sizes="1" orientation="-" count="1">
-     <DockArea name="...">
-      <plot mode="XYPlot" flip_x="false" style="Lines" flip_y="false">
-       <range right="0.528491" bottom="0.253175" left="0.242312" top="0.434037"/>
-       <limitY/>
-       <curve color="#1f77b4" name="/ee_pose/pose/position/[x;z]" curve_x="/ee_pose/pose/position/x" curve_y="/ee_pose/pose/position/z"/>
-       <curve color="#17becf" name="/ee_pose_des/pose/position/[x;z]" curve_x="/ee_pose_des/pose/position/x" curve_y="/ee_pose_des/pose/position/z"/>
-      </plot>
-     </DockArea>
+    <DockSplitter sizes="1" count="1" orientation="-">
+     <DockSplitter sizes="0.5;0.5" count="2" orientation="|">
+      <DockSplitter sizes="0.500615;0.499385" count="2" orientation="-">
+       <DockArea name="...">
+        <plot flip_x="false" mode="XYPlot" flip_y="false" style="Lines">
+         <range right="0.593947" left="0.177090" top="0.433895" bottom="0.257839"/>
+         <limitY/>
+         <curve curve_y="/ee_pose/pose/position/z" color="#ff00cf" name="/ee_pose/pose/position/[x;z]" curve_x="/ee_pose/pose/position/x"/>
+         <curve curve_y="z_des" color="#00fff9" name="[x_des;z_des]" curve_x="x_des"/>
+        </plot>
+       </DockArea>
+       <DockArea name="...">
+        <plot flip_x="false" mode="TimeSeries" flip_y="false" style="Lines">
+         <range right="138.671435" left="0.177090" top="0.532800" bottom="-0.068389"/>
+         <limitY/>
+         <curve color="#ff3700" name="/mobile_wx250s/joint_states/elbow/position"/>
+         <curve color="#0eff28" name="/mobile_wx250s/commands/joint_group/cmd[2]"/>
+        </plot>
+       </DockArea>
+      </DockSplitter>
+      <DockSplitter sizes="0.500615;0.499385" count="2" orientation="-">
+       <DockArea name="...">
+        <plot flip_x="false" mode="TimeSeries" flip_y="false" style="Lines">
+         <range right="138.671435" left="0.177090" top="0.033572" bottom="-0.603334"/>
+         <limitY/>
+         <curve color="#ff2a00" name="/mobile_wx250s/joint_states/shoulder/position"/>
+         <curve color="#1ac938" name="/mobile_wx250s/commands/joint_group/cmd[1]"/>
+        </plot>
+       </DockArea>
+       <DockArea name="...">
+        <plot flip_x="false" mode="TimeSeries" flip_y="false" style="Lines">
+         <range right="138.671435" left="0.177090" top="0.262624" bottom="-0.008229"/>
+         <limitY/>
+         <curve color="#ff0014" name="/mobile_wx250s/joint_states/wrist_angle/position"/>
+         <curve color="#00ff0a" name="/mobile_wx250s/commands/joint_group/cmd[4]"/>
+        </plot>
+       </DockArea>
+      </DockSplitter>
+     </DockSplitter>
     </DockSplitter>
    </Container>
   </Tab>
@@ -22,7 +52,7 @@
  <!-- - - - - - - - - - - - - - - -->
  <Plugins>
   <plugin ID="DataLoad CSV">
-   <parameters time_axis="" delimiter="0"/>
+   <parameters time_axis="time" delimiter="0"/>
   </plugin>
   <plugin ID="DataLoad MCAP"/>
   <plugin ID="DataLoad ROS2 bags">
@@ -40,7 +70,7 @@
    <max_array_size value="100"/>
    <boolean_strings_to_number value="true"/>
    <remove_suffix_from_strings value="true"/>
-   <selected_topics value="/ee_pose;/ee_pose_des"/>
+   <selected_topics value="/ee_pose;/mobile_wx250s/commands/joint_group;/mobile_wx250s/joint_states"/>
   </plugin>
   <plugin ID="UDP Server"/>
   <plugin ID="WebSocket Server"/>
@@ -55,7 +85,13 @@
   <plugin ID="ROS2 Topic Re-Publisher"/>
  </Plugins>
  <!-- - - - - - - - - - - - - - - -->
- <previouslyLoaded_Datafiles/>
+ <previouslyLoaded_Datafiles>
+  <fileInfo filename="../trajectories/ee_circle_traj.csv" prefix="">
+   <plugin ID="DataLoad CSV">
+    <parameters time_axis="time" delimiter="0"/>
+   </plugin>
+  </fileInfo>
+ </previouslyLoaded_Datafiles>
  <previouslyLoaded_Streamer name="ROS2 Topic Subscriber"/>
  <!-- - - - - - - - - - - - - - - -->
  <customMathEquations/>
