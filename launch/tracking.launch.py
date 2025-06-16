@@ -45,9 +45,9 @@ def launch_setup(context, *args, **kwargs):
 
     ros2_control_controllers_config_parameter_file = ParameterFile(
         param_file=PathJoinSubstitution([
-            FindPackageShare('interbotix_xsarm_ros_control'),
-            'config',
+            FindPackageShare('traj_tracking_py'),
             'controllers',
+            #'controllers',
             f'{robot_model_launch_arg.perform(context)}_controllers.yaml',
         ]),
         allow_substs=True

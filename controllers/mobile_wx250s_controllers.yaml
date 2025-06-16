@@ -1,7 +1,7 @@
 /mobile_wx250s:
   controller_manager:
     ros__parameters:
-      update_rate: 1000 # Hz
+      update_rate: 50 # Hz
       arm_controller:
         type: joint_trajectory_controller/JointTrajectoryController
       gripper_controller:
@@ -25,7 +25,7 @@
       action_monitor_rate: 20.0 # Hz
       constraints:
         stopped_velocity_tolerance: 0.02
-        goal_time: 0.5
+        #goal_time: 0.5
   gripper_controller:
     ros__parameters:
       joints:
