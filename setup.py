@@ -11,7 +11,8 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + '/launch', ['launch/tracking.launch.py']),
-        ('share/' + package_name + '/plotjuggler', ['plotjuggler/ee_traj_plot.xml']),
+        ('share/' + package_name + '/plotjuggler', ['plotjuggler/ee_traj_plot.xml',
+                                                    'plotjuggler/error_disp_pid_tuning.xml']),
         ('share/' + package_name + '/bags/perfect_circle', [
             'bags/perfect_circle/metadata.yaml',
             'bags/perfect_circle/perfect_circle_0.db3'
@@ -19,7 +20,8 @@ setup(
         ('share/' + package_name + '/controllers', [
             'controllers/modes_quick.yaml',
             'controllers/mobile_wx250s_controllers.yaml',
-            'controllers/modes_slow.yaml',]),
+            'controllers/modes_slow.yaml',
+            'controllers/mobile_wx250s.yaml',]),
         ('share/' + package_name + '/trajectories', ['trajectories/ee_circle_traj.csv']),
     ],
     install_requires=['setuptools'],

@@ -34,7 +34,8 @@ def launch_setup(context, *args, **kwargs):
     hardware_type_launch_arg = LaunchConfiguration('hardware_type')
     xs_driver_logging_level_launch_arg = LaunchConfiguration('xs_driver_logging_level')
     use_sim_launch_arg = LaunchConfiguration('use_sim')  # Nuovo argomento
-    des_traj_bag_path_launch_arg = LaunchConfiguration('bag_path') # Nuovo argomento per il percorso della ros2 bag
+    #des_traj_bag_path_launch_arg = LaunchConfiguration('bag_path') # Nuovo argomento per il percorso della ros2 bag
+
 
     # sets use_sim_time parameter to 'true' if using gazebo hardware
     use_sim_time_param = determine_use_sim_time_param(
@@ -64,6 +65,11 @@ def launch_setup(context, *args, **kwargs):
             'robot_model': robot_model_launch_arg,
             'robot_name': robot_name_launch_arg,
             'use_rviz': use_rviz_launch_arg,
+            'motor_configs': PathJoinSubstitution([      # Riga aggiunta/modificata
+                FindPackageShare('traj_tracking_py'),
+                'controllers',
+                'mobile_wx250s.yaml'
+            ]),
             'mode_configs': mode_configs_launch_arg,
             'hardware_type': hardware_type_launch_arg,
             'use_sim': use_sim_launch_arg,  # Passa il parametro use_sim
@@ -105,7 +111,6 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {'robot_description': robot_description_launch_arg},
             ros2_control_controllers_config_parameter_file,
-            #{'update_rate': 100},  # imposta qui la frequenza
         ],
         output={'both': 'screen'},
     )

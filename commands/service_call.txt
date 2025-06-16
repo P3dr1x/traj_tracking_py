@@ -1,0 +1,21 @@
+Terminal commands that can be useful
+
+
+--------- SETTARE I PROFILI DI VELOCITÀ DEI MOTORI ---------------------
+
+ros2 service call /mobile_wx250s/set_operating_modes interbotix_xs_msgs/srv/OperatingModes "{cmd_type: 'group', name: 'arm', mode: 'position', profile_type: 'time', profile_velocity: 2000, profile_acceleration: 300}"
+
+
+--------- RESETTARE I GUADAGNI DEL GIUNTO SHOULDER ----------------------
+
+--- Settare i guadagni di un giunto ---
+ros2 service call /mobile_wx250s/set_motor_registers interbotix_xs_msgs/srv/RegisterValues "{cmd_type: 'single', name: 'shoulder', reg: 'Position_P_Gain', value: 800}"
+
+--- Settare i guadagni di un gruppo di giunti ---
+ros2 service call /mobile_wx250s/set_motor_pid_gains interbotix_xs_msgs/srv/MotorGains "{cmd_type: 'group', name: 'arm', kp_pos: 800, ki_pos: 0, kd_pos: 0, k1: 0, k2: 0}"
+
+--------- REGISTRAZIONE ROS2 BAG ----------------------------------------
+
+cd ~/interbotix_ws/src/interbotix_ros_manipulators/interbotix_ros_xsarms/traj_tracking_py/bags
+
+ros2 bag record -o real_circle /ee_pose /mobile_wx250s/joint_states /mobile_wx250s/commands/joint_group 

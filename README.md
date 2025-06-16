@@ -31,7 +31,7 @@ This also launches a [publisher](https://github.com/P3dr1x/traj_tracking_py/blob
   <img src="media/tf_base_ee.png" alt="tf_ee" width="50%">
 </div>
 
-The position of the end-effector is plotted in Plotjuggler (check here for a quick [guide](https://youtu.be/9kFRecDU1bg?si=nHbMTthe3SLJ_b6p) on Plotjuggler). 
+The position of the end-effector is plotted in Plotjuggler (check here for a quick [video guide](https://youtu.be/9kFRecDU1bg?si=nHbMTthe3SLJ_b6p) on Plotjuggler). 
 
 ### Connecting to real hardware (Mobile WidowX250S)
 
@@ -39,7 +39,7 @@ The position of the end-effector is plotted in Plotjuggler (check here for a qui
 ros2 launch traj_tracking_py tracking.launch.py robot_model:=mobile_wx250s use_rviz:=true
 ```
 
-After having launched this file RViz and Plotjuggler should start. Plotjuggler may ask you if you want to start the previously used plugins. Say yes. Then select the `/ee_pose` topic as topic to plot.
+After having launched this file RViz and Plotjuggler should start. Plotjuggler may ask you if you want to start the previously used plugins. Say yes. Then select the `/ee_pose` topic as topic to plot. It is suggested to start the visualization in Plotjuggler only after having run the action client or the publisher (before the topic `mobile_wx250s/commands/joint_group` is not exposed yet)
 
 ### Connecting to simulated hardware (only RViz visualization)
 
@@ -70,8 +70,6 @@ ros2 run traj_tracking_py traj_tracker_client ~/interbotix_ws/src/interbotix_ros
 ```
 ### Publisher: Example of usage
 
-For achieving good performances in the tracking is necessary to create a new parameter file for the motors (`modes_quick.yaml`). This new file has to be created is in the `controllers` folder.
-
 ```
 cd interbotix_ws
 . install/setup.bash
@@ -80,4 +78,4 @@ ros2 run traj_tracking_py traj_tracker_publisher ~/interbotix_ws/src/interbotix_
 
  Trajectory Tracked | PlotJuggler |
 |-------------------|-------------|
-| ![traj_tracked](media/traj_tracked.png) | ![plotjuggler](media/plotjuggler_updated.png) |
+| ![traj_tracked](media/traj_tracked.png) | ![plotjuggler](media/circle_PID_tuned.png) |
